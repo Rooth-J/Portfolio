@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J. Rooth — Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0f0e;
+    --ink-2: #3a3a37;
+    --ink-3: #7a7a74;
+    --paper: #f5f3ee;
+    --paper-2: #eceae3;
+    --accent: #2a6fc8;
+    --accent-light: #dde8f5;
+    --border: rgba(15,15,14,0.1);
+    --mono: 'DM Mono', monospace;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(245,243,238,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-2);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+  }
+  .hero-left {
+    padding: 5rem 3rem 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.2s forwards;
+  }
+  .hero-name em { font-style: italic; color: var(--accent); }
+  .hero-bio {
+    font-size: 1.05rem;
+    color: var(--ink-2);
+    max-width: 42ch;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.35s forwards;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.45s forwards;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--ink-2); background: var(--paper-2); }
+
+  .hero-right {
+    padding: 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  .stat-block {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--paper);
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .stat-block:nth-child(1) { animation-delay: 0.5s; }
+  .stat-block:nth-child(2) { animation-delay: 0.65s; }
+  .stat-block:nth-child(3) { animation-delay: 0.8s; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .stat-label { font-size: 13px; color: var(--ink-3); }
+
+  /* SECTION COMMONS */
+  section { padding: 6rem 3rem; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    line-height: 1.1;
+  }
+
+  /* PROJECTS */
+  #projects { background: var(--paper); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .project-card {
+    background: var(--paper);
+    padding: 2rem;
+    position: relative;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .project-card:hover { background: var(--accent-light); }
+  .project-card:hover .project-arrow { opacity: 1; transform: translate(0, 0); }
+  .project-type {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .project-name {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+  .project-desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    background: var(--paper-2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--ink-2);
+  }
+  .project-links { display: flex; gap: 1rem; }
+  .project-link {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: var(--accent); }
+  .project-arrow {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-size: 1.25rem;
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: all 0.2s;
+    color: var(--accent);
+  }
+
+  /* SKILLS */
+  #skills { background: #f0ebe0; color: var(--ink); }
+  #skills .section-title { color: var(--ink); }
+  #skills .section-num { color: var(--accent); }
+  #skills .section-header { border-color: rgba(15,15,14,0.12); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }
+  .skill-group-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(15,15,14,0.12);
+  }
+  .skill-list { list-style: none; }
+  .skill-list li {
+    font-size: 14px;
+    color: var(--ink-2);
+    padding: 0.4rem 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-list li::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ABOUT */
+  #about { background: var(--paper-2); }
+  .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { font-size: 1rem; color: var(--ink-2); line-height: 1.8; margin-bottom: 1.25rem; }
+  .about-aside {}
+  .aside-block { margin-bottom: 2rem; }
+  .aside-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .aside-value { font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+
+  /* CONTACT */
+  #contact { background: var(--paper); text-align: center; }
+  .contact-inner { max-width: 560px; margin: 0 auto; }
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+  .contact-heading em { font-style: italic; color: var(--accent); }
+  .contact-sub { font-size: 1rem; color: var(--ink-2); margin-bottom: 2.5rem; }
+  .contact-email {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+    margin-bottom: 2.5rem;
+  }
+  .contact-email:hover { color: var(--accent); }
+  .social-links { display: flex; justify-content: center; gap: 1.5rem; }
+  .social-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-2);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .social-link:hover { color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 3rem 1.5rem; border-right: none; border-bottom: 1px solid var(--border); }
+    .hero-right { padding: 2rem 1.5rem; flex-direction: row; flex-wrap: wrap; }
+    .stat-block { flex: 1; min-width: 140px; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#"><span>//</span> j.rooth</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag">M.Sc CS · Data Science · Embedded Systems · Computer Vision</div>
+    <h1 class="hero-name">J. <em>Rooth</em></h1>
+    <p class="hero-bio">I build systems that interact with the real world — from Arduino-based hardware sensors to computer vision pipelines. I care about safety, precision, and software that works when it matters most.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View projects →</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-block">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Projects built</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Platforms: hardware + vision</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">0ms</div>
+      <div class="stat-label">Tolerance for driver safety failures</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">01 /</span>
+    <h2 class="section-title">Selected projects</h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-arrow">↗</div>
+      <div class="project-type">Embedded Systems · Hardware</div>
+      <h3 class="project-name">Smart Driver Drowsiness Detection</h3>
+      <p class="project-desc">A hardware-based safety system built on Arduino Uno that detects driver drowsiness in real time. Uses sensors to monitor alertness and triggers an immediate alert to prevent accidents — no camera or computer required.</p>
+      <div class="project-stack">
+        <span class="tag">Arduino Uno</span>
+        <span class="tag">Embedded C</span>
+        <span class="tag">Sensors</span>
+        <span class="tag">Real-time Systems</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Rooth-J" class="project-link" target="_blank">GitHub ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-arrow">↗</div>
+      <div class="project-type">Computer Vision · Python</div>
+      <h3 class="project-name">Driver Drowsiness Detection with Alerts</h3>
+      <p class="project-desc">A computer vision system that uses OpenCV to monitor a driver's eye and facial activity via webcam. Detects signs of drowsiness and triggers a voice alert instantly, sends a push notification via the Pushbullet API, and logs all events to a MongoDB database for tracking and analysis.</p>
+      <div class="project-stack">
+        <span class="tag">Python</span>
+        <span class="tag">OpenCV</span>
+        <span class="tag">Pushbullet API</span>
+        <span class="tag">dlib</span>
+        <span class="tag">Voice Alert</span>
+        <span class="tag">MongoDB</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Rooth-J" class="project-link" target="_blank">GitHub ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">02 /</span>
+    <h2 class="section-title">Skills & tools</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="reveal">
+      <div class="skill-group-title">Languages</div>
+      <ul class="skill-list">
+        <li>Python</li>
+        <li>Embedded C</li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="skill-group-title">Computer Vision</div>
+      <ul class="skill-list">
+        <li>OpenCV</li>
+        <li>dlib</li>
+        <li>Face & eye detection</li>
+        <li>Real-time video processing</li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="skill-group-title">Hardware & IoT</div>
+      <ul class="skill-list">
+        <li>Arduino Uno</li>
+        <li>Sensor integration</li>
+        <li>Embedded systems</li>
+        <li>Real-time control</li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="skill-group-title">Tools & APIs</div>
+      <ul class="skill-list">
+        <li>Pushbullet API</li>
+        <li>Git · GitHub</li>
+        <li>VS Code · Arduino IDE</li>
+        <li>Push notifications</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">03 /</span>
+    <h2 class="section-title">About me</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a software engineer with a focus on embedded systems and computer vision. My work sits at the intersection of hardware and software — building systems that interact with the real world, detect patterns, and respond in real time.</p>
+      <p>I've built driver safety systems using both Arduino microcontrollers and Python-based computer vision pipelines, combining sensor data, facial recognition, voice alerts, and mobile notifications to solve a genuinely life-critical problem. The system also includes database support via MongoDB for logging and tracking drowsiness events.</p>
+      <p>I enjoy working close to the hardware — writing efficient embedded C, wiring up circuits, and tuning OpenCV pipelines frame by frame. I'm driven by projects that have a clear real-world impact.</p>
+    </div>
+    <div class="about-aside reveal">
+      <div class="aside-block">
+        <div class="aside-label">Location</div>
+        <div class="aside-value">India</div>
+      </div>
+      <div class="aside-block">
+        <div class="aside-label">Currently</div>
+        <div class="aside-value">Final year student &<br>building real-world projects</div>
+      </div>
+      <div class="aside-block">
+        <div class="aside-label">Education</div>
+        <div class="aside-value">M.Sc Integrated Computer Science<br>5th Year (Final Year)</div>
+      </div>
+      <div class="aside-block">
+        <div class="aside-label">GitHub</div>
+        <div class="aside-value"><a href="https://github.com/Rooth-J" target="_blank" style="color:var(--accent);text-decoration:none;">github.com/Rooth-J</a></div>
+      </div>
+      <div class="aside-block">
+        <div class="aside-label">Interests</div>
+        <div class="aside-value">Embedded systems · Computer vision<br>IoT · Driver safety · Robotics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <h2 class="contact-heading reveal">Let's <em>build</em><br>something together</h2>
+    <p class="contact-sub reveal">I'm open to collaborations, freelance projects, and interesting full-time roles. Drop me a line.</p>
+    <a href="mailto:roothrooth829@gmail.com" class="contact-email reveal">roothrooth829@gmail.com</a>
+    <div class="social-links reveal">
+      <a href="https://github.com/Rooth-J" class="social-link" target="_blank">GitHub</a>
+      <a href="mailto:roothrooth829@gmail.com" class="social-link">Email</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2025 J. Rooth</span>
+  <span class="footer-copy">Built with care, no frameworks</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

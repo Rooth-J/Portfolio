@@ -13,10 +13,10 @@
     --ink: #0f0f0e;
     --ink-2: #3a3a37;
     --ink-3: #7a7a74;
-    --paper: #f5f3ee;
-    --paper-2: #eceae3;
+    --paper: #fff6df;
+    --paper-2: #ede7d4;
     --accent: #2a6fc8;
-    --accent-light: #dde8f5;
+    --accent-light: #cad6e4;
     --border: rgba(15,15,14,0.1);
     --mono: 'DM Mono', monospace;
     --serif: 'DM Serif Display', Georgia, serif;
@@ -206,7 +206,7 @@
   .project-card:hover .project-arrow { opacity: 1; transform: translate(0, 0); }
   .project-type {
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.1em;
     color: var(--accent);
     text-transform: uppercase;
@@ -232,7 +232,7 @@
   }
   .tag {
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 13px;
     padding: 3px 8px;
     background: var(--paper-2);
     border: 1px solid var(--border);
@@ -263,7 +263,7 @@
   }
 
   /* SKILLS */
-  #skills { background: #f0ebe0; color: var(--ink); }
+  #skills { background: #eadfc8; color: var(--ink); }
   #skills .section-title { color: var(--ink); }
   #skills .section-num { color: var(--accent); }
   #skills .section-header { border-color: rgba(15,15,14,0.12); }
@@ -274,7 +274,7 @@
   }
   .skill-group-title {
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.1em;
     color: var(--accent);
     text-transform: uppercase;
@@ -309,7 +309,7 @@
   .aside-block { margin-bottom: 2rem; }
   .aside-label {
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.1em;
     color: var(--accent);
     text-transform: uppercase;
@@ -331,7 +331,7 @@
   .contact-email {
     display: inline-block;
     font-family: var(--mono);
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: var(--ink);
     text-decoration: none;
     border-bottom: 2px solid var(--accent);
@@ -342,7 +342,7 @@
   .contact-email:hover { color: var(--accent); }
   .social-links { display: flex; justify-content: center; gap: 1.5rem; }
   .social-link {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--ink-2);
     text-decoration: none;
@@ -353,7 +353,7 @@
 
   /* FOOTER */
   footer {
-    padding: 1.5rem 3rem;
+    padding: 1rem 3rem;
     border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -486,12 +486,12 @@
     <div class="reveal">
       <div class="skill-group-title">Languages</div>
       <ul class="skill-list">
-        <li>Python</li>
-        <li>Embedded C</li>
+        <b><li>Python</li></b>
+        <b><li>Embedded C</li></b>
       </ul>
     </div>
     <div class="reveal">
-      <div class="skill-group-title">Computer Vision</div>
+      <b><div class="skill-group-title">Computer Vision</div></b>
       <ul class="skill-list">
         <li>OpenCV</li>
         <li>dlib</li>
@@ -500,7 +500,7 @@
       </ul>
     </div>
     <div class="reveal">
-      <div class="skill-group-title">Hardware & IoT</div>
+      <b><div class="skill-group-title">Hardware & IoT</div></b>
       <ul class="skill-list">
         <li>Arduino Uno</li>
         <li>Sensor integration</li>
@@ -509,7 +509,7 @@
       </ul>
     </div>
     <div class="reveal">
-      <div class="skill-group-title">Tools & APIs</div>
+      <b><div class="skill-group-title">Tools & APIs</div></b>
       <ul class="skill-list">
         <li>Pushbullet API</li>
         <li>Git · GitHub</li>
